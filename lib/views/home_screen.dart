@@ -121,7 +121,7 @@ class HomeScreen extends ConsumerWidget {
           children: [
             CircularProgressIndicator(),
             SizedBox(height: 16),
-            Text('Cargando personajes...'),
+            Text('Cargando personajes'),
           ],
         ),
       ),

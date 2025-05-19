@@ -91,7 +91,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
-                      const Text('Funcionalidad en desarrollo'),
+                      const Text('...'),
                     ],
                   ),
                 ),
@@ -107,7 +107,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
-            // Si cambiamos de pestaña, limpiamos el personaje seleccionado
+            // limpiar estado
             if (index != 0) {
               ref.read(selectedCharacterProvider.notifier).state = null;
             }
