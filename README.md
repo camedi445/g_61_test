@@ -42,7 +42,7 @@ Se valorará especialmente:
 
 ---
 
-# Mejoras Implementadas
+# Mejoras Implementados
 
 ## Patrón Arquitectónico MVC
 
@@ -91,7 +91,7 @@ lib/
 
 - **Escalabilidad**: Ahroa es mas facil agregar funcionalidades sin afectar el código existente
 - **Mantenibilidad**: El codigo es un poco mas  fácil de mantener al tener responsabilidades mas claras y directas
-- **Testabilidad**: La separación de lógica facilita la escritura de tests unitarios
-- **Reutilización**: Los componentes podran ahora reutilizarse en diferentes partes de la aplicación
+- **Testeabilidad**: La separación de lógica facilita la escritura de tests unitarios
+- **Reutilizacion**: Los componentes podran ahora reutilizarse en diferentes partes de la aplicacion
 
 
