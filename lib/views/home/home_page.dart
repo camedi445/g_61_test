@@ -14,43 +14,30 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(characterProvider);
 
-    if (state.isLoading) {
-      return Scaffold(
-        appBar: AppBar(title: Text('Characters')),
-        body: const LoadingIndicator(),
-      );
-    }
-
-    if (state.error != null) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Characters')),
-        body: ErrorMessage(message: state.error!),
-      );
-    }
-
-    final list = state.characters;
-    if (list == null || list.isEmpty) {
-      return Scaffold(
-        appBar: AppBar(title: Text('Characters')),
-        body: const Center(child: Text('No characters available')),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(title: const Text('Characters')),
-      body: ListView.builder(
-        itemCount: list.length,
-        itemBuilder:
-            (ctx, i) => CharacterCard(
-              character: list[i],
-              onTap:
-                  () => Navigator.pushNamed(
-                    context,
-                    DetailPage.routeName,
-                    arguments: list[i],
-                  ),
-            ),
-      ),
+      body:
+          state.isLoading
+              ? const LoadingIndicator()
+              : state.error != null
+              ? ErrorMessage(message: state.error!)
+              : state.characters == null || state.characters!.isEmpty
+              ? const Center(child: Text('No characters available'))
+              : ListView.builder(
+                itemCount: state.characters!.length,
+                itemBuilder: (ctx, i) {
+                  final char = state.characters![i];
+                  return CharacterCard(
+                    character: char,
+                    onTap:
+                        () => Navigator.pushNamed(
+                          context,
+                          DetailPage.routeName,
+                          arguments: char,
+                        ),
+                  );
+                },
+              ),
     );
   }
 }

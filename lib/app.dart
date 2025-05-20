@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'models/character.dart';
 import 'views/home/home_page.dart';
 import 'views/detail/detail_page.dart';
@@ -11,41 +10,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        title: 'Rick and Morty MVC',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        initialRoute: HomePage.routeName,
-        onGenerateRoute: (RouteSettings settings) {
-          switch (settings.name) {
-            case HomePage.routeName:
+    return MaterialApp(
+      title: 'Rick and Morty MVC',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      initialRoute: HomePage.routeName,
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case HomePage.routeName:
+            return MaterialPageRoute(builder: (_) => const HomePage());
+          case DetailPage.routeName:
+            final args = settings.arguments;
+            if (args is Character) {
               return MaterialPageRoute(
-                builder: (_) => const HomePage(),
-                settings: settings,
+                builder: (_) => DetailPage(character: args),
               );
-            case DetailPage.routeName:
-              if (settings.arguments is! Character) {
-                return MaterialPageRoute(builder: (_) => const HomePage());
-              }
-              return MaterialPageRoute(
-                builder: (_) => const DetailPage(),
-                settings: settings,
-              );
-            case SearchPage.routeName:
-              return MaterialPageRoute(
-                builder: (_) => const SearchPage(),
-                settings: settings,
-              );
-            case ProfilePage.routeName:
-              return MaterialPageRoute(
-                builder: (_) => const ProfilePage(),
-                settings: settings,
-              );
-            default:
-              return MaterialPageRoute(builder: (_) => const HomePage());
-          }
-        },
-      ),
+            }
+            return MaterialPageRoute(builder: (_) => const HomePage());
+          case SearchPage.routeName:
+            return MaterialPageRoute(builder: (_) => const SearchPage());
+          case ProfilePage.routeName:
+            return MaterialPageRoute(builder: (_) => const ProfilePage());
+          default:
+            return MaterialPageRoute(builder: (_) => const HomePage());
+        }
+      },
     );
   }
 }

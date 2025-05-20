@@ -24,7 +24,9 @@ class CharacterState {
 }
 
 class CharacterController extends StateNotifier<CharacterState> {
-  CharacterController(this.ref) : super(CharacterState());
+  CharacterController(this.ref) : super(CharacterState()) {
+    loadCharacters();
+  }
   final Ref ref;
 
   Future<void> loadCharacters() async {
