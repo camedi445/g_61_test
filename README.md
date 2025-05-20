@@ -1,41 +1,39 @@
-# Taller Práctico Flutter - Rick y Morty
+## Cambios realizados
 
-## Descripción
+### 1. **Separación de responsabilidades**
+- Se dividió el código en diferentes archivos y carpetas para seguir el patrón **MVC**:
+  - **Models**: Representan los datos de la aplicación.
+  - **screens**: Contienen la interfaz de usuario.
+  - **Domain**: Gestionan la lógica de negocio con un controlado.
 
-En este repositorio encontrarás una solución que tiene un menú principal con 3 opciones:
+### 2. **Estructura del proyecto**
+Se reorganizó el proyecto con la siguiente estructura:
 
-1. **Home**: Contiene una lista de personajes de Rick y Morty con vista detalle.
-2. **Search**: Pantalla de búsqueda.
-3. **Profile**: Pantalla de perfil.
+lib/
+├── main.dart
+├── models/
+│   └── character.dart
+├── domain/
+│   └── character_controller.dart
+├── providers/
+│   └── character_provider.dart
+└── ui/
+    ├── screens/
+    │   ├── home_screen.dart
+    │   ├── search_screen.dart
+    │   ├── profile_screen.dart
+    │   └── detail_character_screen.dart
 
-La funcionalidad principal está en la primera opción, donde se implementa una vista de lista-detalle que consume la API pública de Rick y Morty.
+---
 
-## Objetivo del Taller
+### 3. **Implementación de Riverpod**
+- Se utilizó **Riverpod** para gestionar el estado de la aplicación.
+- Se creó un archivo `character_provider.dart` en la carpeta `providers/` para manejar la lista de personajes.
+- El proveedor `characterProvider` utiliza el controlador `CharacterController` para obtener los datos de la API y exponerlos a las vistas.
 
-Tu trabajo como experto en Flutter es aplicar las mejores prácticas de programación vistas en clase para convertir esta solución en una aplicación escalable y mantenible.
-
-## Requisitos
-
-Para lograr este objetivo es indispensable que utilices:
-
-- **Riverpod** como gestor de estado
-- El patrón arquitectónico **MVC** (Modelo-Vista-Controlador)
-- Una clara separación de responsabilidades entre las diferentes clases
-
-## Tiempo y Entrega
-
-- Duración de la actividad: **2 horas**
-- Proceso de entrega:
-  1. Crear una rama con tu solución
-  2. A partir de esta rama, crear un Pull Request a la rama principal
-  3. Incluir en el README una explicación detallada de los aspectos que mejoraste en la aplicación
-
-## Criterios de Evaluación
-
-Se valorará especialmente:
-
-- La correcta implementación del patrón MVC
-- El uso adecuado de Riverpod para la gestión del estado
-- La separación de responsabilidades entre clases
-- La claridad y mantenibilidad del código resultante
-- La UI del detalle del personaje.
+Ejemplo del proveedor:
+```dart
+final characterProvider = FutureProvider<List<Character>>((ref) async {
+  final controller = CharacterController();
+  return await controller.fetchCharacters();
+});
