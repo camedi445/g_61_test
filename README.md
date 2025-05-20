@@ -1,41 +1,7 @@
-# Taller Práctico Flutter - Rick y Morty
+## Explicación Juan Fernando Álvarez Gómez
 
-## Descripción
+1. Riverpod: Se creó un Provider para la lista de personajes, y otro para un repositorio.
 
-En este repositorio encontrarás una solución que tiene un menú principal con 3 opciones:
+2. MVC: Se creó un datasource API, y se llamó desde un repositorio para que el provider de la lista de personajes (o controller) no se preocupe por si la data llega de una API o cualquier otro lugar. Por otro lado, la UI es la que consume este provider para mostrar los datos.
 
-1. **Home**: Contiene una lista de personajes de Rick y Morty con vista detalle.
-2. **Search**: Pantalla de búsqueda.
-3. **Profile**: Pantalla de perfil.
-
-La funcionalidad principal está en la primera opción, donde se implementa una vista de lista-detalle que consume la API pública de Rick y Morty.
-
-## Objetivo del Taller
-
-Tu trabajo como experto en Flutter es aplicar las mejores prácticas de programación vistas en clase para convertir esta solución en una aplicación escalable y mantenible.
-
-## Requisitos
-
-Para lograr este objetivo es indispensable que utilices:
-
-- **Riverpod** como gestor de estado
-- El patrón arquitectónico **MVC** (Modelo-Vista-Controlador)
-- Una clara separación de responsabilidades entre las diferentes clases
-
-## Tiempo y Entrega
-
-- Duración de la actividad: **2 horas**
-- Proceso de entrega:
-  1. Crear una rama con tu solución
-  2. A partir de esta rama, crear un Pull Request a la rama principal
-  3. Incluir en el README una explicación detallada de los aspectos que mejoraste en la aplicación
-
-## Criterios de Evaluación
-
-Se valorará especialmente:
-
-- La correcta implementación del patrón MVC
-- El uso adecuado de Riverpod para la gestión del estado
-- La separación de responsabilidades entre clases
-- La claridad y mantenibilidad del código resultante
-- La UI del detalle del personaje.
+3. Separación de responsabilidades: Como se puede ver en la estructura del proyecto se separó por carpetas como fue sugerido en clase. Y la UI: También se separó por funcionalidad y dentro de cada carpeta está la screen y los widgets usados en dicha funcionalidad.
