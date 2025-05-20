@@ -8,7 +8,7 @@ class CharacterListController extends StateNotifier<CharacterListState> {
     : super(CharacterListState());
 
   Future<void> init() async {
-    await getCharacterList();
+    await getCharacterList(); 
   }
 
   Future<void> getCharacterList() async {
