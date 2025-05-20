@@ -39,3 +39,14 @@ Se valorará especialmente:
 - La separación de responsabilidades entre clases
 - La claridad y mantenibilidad del código resultante
 - La UI del detalle del personaje.
+
+
+## Aspectos mejorados: 
+
+1. Modularización y organización de archivos y carpetas 
+2. Manera correcta de uso de variables (final)
+3. Uso de modelos
+4. Separación de responsabilidades entre vistas, "Lógica de negocio", gestión de estados y peticiones
+5. Manejo de errores en las peticiones
+6. Remover funciones innecesarias e implemetar funciones nativas del sdk
+7. Mejorar vista de detalle
