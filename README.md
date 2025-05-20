@@ -39,3 +39,8 @@ Se valorará especialmente:
 - La separación de responsabilidades entre clases
 - La claridad y mantenibilidad del código resultante
 - La UI del detalle del personaje.
+
+## Lo que se hizo
+Refactorizamos lo que seria el main.dart en capas: el modelo (Character) solo guarda datos, el servicio (ApiService) habla con la API y convierte JSON, el controlador (CharacterController) orquesta esas llamadas, y la vista de las pantallas solo dibuja lo que le dicen. Además, movimos los indicadores de carga y errores a widgets comunes, y organizamos todo en carpetas (models/, services/, controllers/, providers/, screens/, widgets/).
+
+Por ultimo, reemplazamos todos esos setState() y banderas manuales con un FutureProvider de Riverpod: en los screens hacemos ref.watch(charactersProvider) para saber si tienen que mostrar spinner, lista o mensaje de error. Adicional a todo eso, instalamos ya gregamos al archivo pubspec.yaml la instalcion de nuestro riverpord
