@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'views/home_screen.dart';
+import 'views/character_detail_screen.dart';
+import 'models/character.dart';
+import 'providers/character_providers.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,81 +14,87 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: true,
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: MyHomePage(),
+    return ProviderScope(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.blue,
+            elevation: 0,
+            centerTitle: true,
+            foregroundColor: Colors.white,
+          ),
+          cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+        home: const MyHomePage(),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
+  const MyHomePage({super.key});
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   int _selectedIndex = 0;
-  var characters = [];
-  var isLoading = false;
-  var selectedCharacter;
-  var showCharacterDetail = false;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchCharacters();
-  }
-
-  fetchCharacters() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    var response = await http.get(
-      Uri.parse('https://rickandmortyapi.com/api/character'),
-    );
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      setState(() {
-        characters = data['results'];
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    final selectedCharacter = ref.watch(selectedCharacterProvider);
     return Scaffold(
-      appBar: AppBar(title: Text('Rick and Morty App')),
-      body:
-          _selectedIndex == 0
-              ? showCharacterDetail
-                  ? CharacterDetailScreen(
-                    character: selectedCharacter,
-                    onBack: () {
-                      setState(() {
-                        showCharacterDetail = false;
-                      });
-                    },
-                  )
-                  : HomeScreen(
-                    characters: characters,
-                    isLoading: isLoading,
-                    onCharacterTap: (character) {
-                      setState(() {
-                        selectedCharacter = character;
-                        showCharacterDetail = true;
-                      });
-                    },
-                  )
-              : _selectedIndex == 1
-              ? Center(child: Text('Search Screen'))
-              : Center(child: Text('Profile Screen')),
+      appBar: AppBar(
+        title: const Text('Rick and Morty App'),
+        elevation: 2,
+      ),
+      body: _selectedIndex == 0
+          ? (selectedCharacter != null
+              ? CharacterDetailScreen(
+                  character: selectedCharacter,
+                  onBack: () => ref.read(selectedCharacterProvider.notifier).state = null,
+                )
+              : HomeScreen(
+                  onCharacterTap: (character) => ref.read(selectedCharacterProvider.notifier).state = character,
+                ))
+          : _selectedIndex == 1
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.search, size: 80, color: Colors.blue.withOpacity(0.5)),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Búsqueda',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text('Funcionalidad en desarrollo'),
+                    ],
+                  ),
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.person, size: 80, color: Colors.blue.withOpacity(0.5)),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Perfil',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text('...'),
+                    ],
+                  ),
+                ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -93,70 +102,18 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        elevation: 8,
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
+            // limpiar estado
+            if (index != 0) {
+              ref.read(selectedCharacterProvider.notifier).state = null;
+            }
           });
         },
       ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  final List characters;
-  final bool isLoading;
-  final Function onCharacterTap;
-
-  const HomeScreen({
-    required this.characters,
-    required this.isLoading,
-    required this.onCharacterTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
-
-    return ListView.builder(
-      itemCount: characters.length,
-      itemBuilder: (context, index) {
-        var character = characters[index];
-        return ListTile(
-          leading: Image.network(character['image']),
-          title: Text(character['name']),
-          subtitle: Text('Status: ${character['status']}'),
-          onTap: () => onCharacterTap(character),
-        );
-      },
-    );
-  }
-}
-
-class CharacterDetailScreen extends StatelessWidget {
-  final dynamic character;
-  final Function onBack;
-
-  const CharacterDetailScreen({required this.character, required this.onBack});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        IconButton(icon: Icon(Icons.arrow_back), onPressed: () => onBack()),
-        Image.network(character['image'], height: 200),
-        Text(
-          character['name'],
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        Text('Status: ${character['status']}'),
-        Text('Species: ${character['species']}'),
-        Text('Gender: ${character['gender']}'),
-        Text('Origin: ${character['origin']['name']}'),
-        Text('Location: ${character['location']['name']}'),
-      ],
     );
   }
 }

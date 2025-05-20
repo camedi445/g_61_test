@@ -39,3 +39,59 @@ Se valorará especialmente:
 - La separación de responsabilidades entre clases
 - La claridad y mantenibilidad del código resultante
 - La UI del detalle del personaje.
+
+---
+
+# Mejoras Implementados
+
+## Patrón Arquitectónico MVC
+
+- **Modelo**: Se creo la clase `Character` en `models/character.dart` para representar los datos de los personajes de forma estructurada.
+- **Vista**: Las interfaces de usuario están separadas en `views/home_screen.dart` y `views/character_detail_screen.dart`, enfocándose únicamente en la presentación.
+- **Controlador**: se creo la lógica de negocio para obtener los datos de la API se ha encapsulado en `controllers/character_controller.dart`.
+
+## Gestión de Estado con Riverpod
+se implemento Riverpod como gestor de estado, reemplazando el uso de `setState()`:
+
+- Creación de providers en `providers/character_providers.dart` para:
+  - Gestionar la obtención de personajes (`charactersProvider`)
+  - Mantener el estado del personaje seleccionado (`selectedCharacterProvider`)
+- Uso de `ConsumerWidget` y `ConsumerStatefulWidget` para consumir los providers
+- Uso de `ref.watch()` para observar cambios en el estado
+- Uso de `ref.read()` para modificar el estado cuando sea necesario
+
+## Separación de Responsabilidades
+
+Lse aplico una mejora en la separacion de responsabilidades en donde:
+
+- **Obtención de Datos**: El controlador se encarga de hacer las peticiones HTTP
+- **Manejo de Estado**: Los providers gestionan el estado de la aplicación
+- **Presentación**: Las vistas solo renderizan la UI basándose en el estado actual
+- **Navegación**: La navegación entre pantallas se maneja de forma declarativa
+
+## Estructura del Proyecto
+
+La estructura de carpetas ahora refleja la arquitectura MVC:
+
+```
+lib/
+  ├── main.dart
+  ├── controllers/
+  │   └── 
+  ├── models/
+  │   └── 
+  ├── providers/
+  │   └── 
+  └── views/
+      ├── 
+      └── 
+```
+
+## Beneficios de las Mejoras
+
+- **Escalabilidad**: Ahroa es mas facil agregar funcionalidades sin afectar el código existente
+- **Mantenibilidad**: El codigo es un poco mas  fácil de mantener al tener responsabilidades mas claras y directas
+- **Testeabilidad**: La separación de lógica facilita la escritura de tests unitarios
+- **Reutilizacion**: Los componentes podran ahora reutilizarse en diferentes partes de la aplicacion
+
+
