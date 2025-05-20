@@ -39,3 +39,26 @@ Se valorará especialmente:
 - La separación de responsabilidades entre clases
 - La claridad y mantenibilidad del código resultante
 - La UI del detalle del personaje.
+
+## CAMBIOSs
+
+### 1. Implementación del patrón MVC
+Se separó la lógica de la aplicación en tres capas:
+- **Modelos
+- **ControladoreS
+- **Ui
+
+
+---
+
+### 2. Uso de riverpod
+Se uso riverpod para manejar en el estado, se puede evidenciar en el provider con ref y watch
+
+---
+
+### 3. Separación clara de responsabilidades
+Cada clase ahora tiene una única responsabilidad:
+- El controlador solo busca datos.
+- Las vistas no contienen lógica de negocio.
+- Los widgets reutilizables como CharacterItem muestran datos individuales
+

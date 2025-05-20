@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:g_61_test/providers/character_provider.dart';
-import 'package:g_61_test/ui/character_item.dart';
+import 'package:g_61_test/ui/widgets/character_item.dart';
 
 class HomeScreen extends ConsumerWidget{
   final Function onCharacterTap;
