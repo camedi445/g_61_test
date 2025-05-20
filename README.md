@@ -1,41 +1,20 @@
-# Taller Práctico Flutter - Rick y Morty
 
-## Descripción
+---
+# santiago lopez ramirez
 
-En este repositorio encontrarás una solución que tiene un menú principal con 3 opciones:
+## Mejoras aplicadas
 
-1. **Home**: Contiene una lista de personajes de Rick y Morty con vista detalle.
-2. **Search**: Pantalla de búsqueda.
-3. **Profile**: Pantalla de perfil.
+### 1. Implementación del patrón MVC
+- separación entre modelo, vistas, controlador y servicio.
 
-La funcionalidad principal está en la primera opción, donde se implementa una vista de lista-detalle que consume la API pública de Rick y Morty.
+### 2. Gestión del estado con Riverpod
+- realice la gestion de estados con riverpod
 
-## Objetivo del Taller
+### 3. Modularización
+- dividi el problema en varios archivos para mantener un codigo mas legible y mejor, separando las screen de details y home dando una responsabilidad unica a a cada una
 
-Tu trabajo como experto en Flutter es aplicar las mejores prácticas de programación vistas en clase para convertir esta solución en una aplicación escalable y mantenible.
+### 4 UI del detalle del personaje. 
+- cambios basicos pero muy visibles en la ui de details, haciendo que se vea mas amigable con algunos conceptos vistos en la clase 
 
-## Requisitos
 
-Para lograr este objetivo es indispensable que utilices:
-
-- **Riverpod** como gestor de estado
-- El patrón arquitectónico **MVC** (Modelo-Vista-Controlador)
-- Una clara separación de responsabilidades entre las diferentes clases
-
-## Tiempo y Entrega
-
-- Duración de la actividad: **2 horas**
-- Proceso de entrega:
-  1. Crear una rama con tu solución
-  2. A partir de esta rama, crear un Pull Request a la rama principal
-  3. Incluir en el README una explicación detallada de los aspectos que mejoraste en la aplicación
-
-## Criterios de Evaluación
-
-Se valorará especialmente:
-
-- La correcta implementación del patrón MVC
-- El uso adecuado de Riverpod para la gestión del estado
-- La separación de responsabilidades entre clases
-- La claridad y mantenibilidad del código resultante
-- La UI del detalle del personaje.
+---
