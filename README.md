@@ -1,41 +1,12 @@
-# Taller Práctico Flutter - Rick y Morty
 
-## Descripción
-
-En este repositorio encontrarás una solución que tiene un menú principal con 3 opciones:
-
-1. **Home**: Contiene una lista de personajes de Rick y Morty con vista detalle.
-2. **Search**: Pantalla de búsqueda.
-3. **Profile**: Pantalla de perfil.
-
-La funcionalidad principal está en la primera opción, donde se implementa una vista de lista-detalle que consume la API pública de Rick y Morty.
-
-## Objetivo del Taller
-
-Tu trabajo como experto en Flutter es aplicar las mejores prácticas de programación vistas en clase para convertir esta solución en una aplicación escalable y mantenible.
-
-## Requisitos
-
-Para lograr este objetivo es indispensable que utilices:
-
-- **Riverpod** como gestor de estado
-- El patrón arquitectónico **MVC** (Modelo-Vista-Controlador)
-- Una clara separación de responsabilidades entre las diferentes clases
-
-## Tiempo y Entrega
-
-- Duración de la actividad: **2 horas**
-- Proceso de entrega:
-  1. Crear una rama con tu solución
-  2. A partir de esta rama, crear un Pull Request a la rama principal
-  3. Incluir en el README una explicación detallada de los aspectos que mejoraste en la aplicación
-
-## Criterios de Evaluación
-
-Se valorará especialmente:
-
-- La correcta implementación del patrón MVC
-- El uso adecuado de Riverpod para la gestión del estado
-- La separación de responsabilidades entre clases
-- La claridad y mantenibilidad del código resultante
-- La UI del detalle del personaje.
+## Juliana Betancur Blandón
+Para la refactorización del proyecto se ha realizado:
+- Creación de carpetas para separación de responsabilidades basada en MVC. models, services, controllers, providers, views con screens y widgets.
+- Se encapsuló toda la lógica de http y api en un solo servicio.
+- Controlador con riverpod: controllers/character_controller.dart extiende StateNotifier<AsyncValue<List<Character>>>.
+- Centraliza la carga, manejo de errores y refresco de datos con StateNotifier (CharacterController) que encapsula la lógica de fetch, loading y error.
+- Providers bien definidos
+- Uso de riverpod en la UI: En lugar de setState para cargar datos, la UI “escucha” al provider con ref.watch(...).
+- Extracción de screens y widgets
+- Gestión de pestañas con IndexedStack: El índice del BottomNavigationBar se gestiona con un provider, eliminando setState en el widget principal.
+- Mejor legibilidad y mantenibilidad
